@@ -1,0 +1,17 @@
+const allQuestions  = [
+    {'no':'1','subject': '题目1','optionOne':'选项','optionTwo':'选项','optionThree':'选项','optionFour':'选项','optionFive':'选项','answer':'1'},
+    {'no':'1','subject': '题目2','optionOne':'选项','optionTwo':'选项','optionThree':'选项','optionFour':'选项','optionFive':'选项','answer':'1'},
+    {'no':'1','subject': '题目3','optionOne':'选项','optionTwo':'选项','optionThree':'选项','optionFour':'选项','optionFive':'选项','answer':'1'},
+    {'no':'1','subject': '题目4','optionOne':'选项','optionTwo':'选项','optionThree':'选项','optionFour':'选项','optionFive':'选项','answer':'1'},
+    {'no':'1','subject': '题目5','optionOne':'选项','optionTwo':'选项','optionThree':'选项','optionFour':'选项','optionFive':'选项','answer':'1'},
+    {'no':'1','subject': '题目6','optionOne':'选项','optionTwo':'选项','optionThree':'选项','optionFour':'选项','optionFive':'选项','answer':'1'},
+    {'no':'1','subject': '题目7','optionOne':'选项','optionTwo':'选项','optionThree':'选项','optionFour':'选项','optionFive':'选项','answer':'1'},
+    {'no':'1','subject': '题目8','optionOne':'选项','optionTwo':'选项','optionThree':'选项','optionFour':'选项','optionFive':'选项','answer':'1'},
+    {'no':'1','subject': '题目9','optionOne':'选项','optionTwo':'选项','optionThree':'选项','optionFour':'选项','optionFive':'选项','answer':'1'},
+    {'no':'1','subject': '题目10','optionOne':'选项','optionTwo':'选项','optionThree':'选项','optionFour':'选项','optionFive':'选项','answer':'1'},
+    {'no':'1','subject': '题目11','optionOne':'选项','optionTwo':'选项','optionThree':'选项','optionFour':'选项','optionFive':'选项','answer':'1'},
+    {'no':'1','subject': '题目12','optionOne':'选项','optionTwo':'选项','optionThree':'选项','optionFour':'选项','optionFive':'选项','answer':'1'},
+    {'no':'1','subject': '题目13','optionOne':'选项','optionTwo':'选项','optionThree':'选项','optionFour':'选项','optionFive':'选项','answer':'1'},
+    {'no':'1','subject': '题目14','optionOne':'选项','optionTwo':'选项','optionThree':'选项','optionFour':'选项','optionFive':'选项','answer':'1'},
+    {'no':'1','subject': '题目15','optionOne':'选项','optionTwo':'选项','optionThree':'选项','optionFour':'选项','optionFive':'选项','answer':'1'},
+];    //题库
