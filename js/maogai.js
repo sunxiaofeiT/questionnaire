@@ -214,7 +214,7 @@ function startButton() {
     var ele = $('#includeAnswer');
     shouye.fadeOut();
     setTimeout(()=> {
-        ele.fadeIn("slow");
+        ele.fadeIn("");
     },200)
 }
 /**
@@ -223,9 +223,9 @@ function startButton() {
  */
 function endButton() {
     var questionDom = $('#includeAnswer');
-    questionDom.fadeOut('slow');
+    questionDom.fadeOut('');
     var resultDom = $('#includeResult');
-    resultDom.fadeIn('slow');
+    resultDom.fadeIn('');
 }
 /**
  * 判断题目完成情况,计算已做和未做的,以及得分情况

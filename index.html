@@ -24,15 +24,28 @@
 	<script src="./js/questions.js"></script>
 	<script src="./js/maogai.js"></script>
 
-	<!-- html -->
-	<div id="htmlContent">
-		<!-- 首页 -->
-		<div id="includeStart">
-			<div id="indexImgDiv">
-				<img id="indexImg" src="./img/index.jpg">
-			</div>
-			<button id="startButton" class="layui-btn layui-btn-normal">开始答题</button>
+	<!-- 首页 -->
+	<div id="includeStart">
+		<div id="indexImgDiv"></div>
+		<div id="indexTitle"></div>
+		<div id="indexSubtitle"><h4>你的毛概学的咋样!？</h4></div>
+		<button id="startButton" class="layui-btn"><img src="./img/start.png"></button>
+		<button id="selectLevel" class="layui-btn"><img src="./img/selectLevel.png"></button>
+		<div id="bottomButtons">
+			<div class="bottomEach"><img src="./img/cbackground.jpg"></div>
+			<div class="bottomEach"><img src="./img/cbackground.jpg"></div>
+			<div class="bottomEach"><img src="./img/cbackground.jpg"></div>		
+			<div style="clear:both"></div>	
 		</div>
+		<div id="bottomButtonsText">
+			<div class="bottomEach">排行榜</div>
+			<div class="bottomEach">资料</div>
+			<div class="bottomEach">说明</div>			
+		</div>
+	</div>
+
+
+	<div id="htmlContent">
 		
 		<!-- 配置情况 -->
 		<div id="setting">

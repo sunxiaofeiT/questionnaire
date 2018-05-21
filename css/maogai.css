@@ -1,25 +1,99 @@
+html,body {
+    line-height: 1;
+    color: #333;
+    width: 100%;
+    height: 100%;
+    margin: 0 auto;
+    overflow-x: hidden;
+    /* background: url(../img/bg-textbook.jpg) no-repeat center top; */
+    background: linear-gradient(#40a9ff, #1890ff);
+    background-size: 100% 100%;
+    font-size: 15px;
+}
 #resultDiv {
     display: none;
 }
 
 /* 首页样式 */
 #includeStart {
-    display: none;
+    /* display: none; */
+    width: 100%;
+    height: 100%;
 }
 #startQuestion {
     width: 100%;
     height: 100%;
     border: 1px  solid black;
 }
+/* 开始按钮 */
 #startButton {
+    margin-top: 100px;
     width: 80%;
+    height: 55px;
     margin-left: 10%;
-    margin-right: 10%;
+    border-radius: 30px;
+    background-color: #fff566;
+}
+#startButton img {
+    margin-left: 10%;
+    width: 80%;
+    height: 80%;
+}
+/* 选择难度按钮 */
+#selectLevel {
+    margin-top: 15px;
+    width: 80%;
+    height: 55px;
+    margin-left: 10%;
+    border-radius: 30px;
+    background-color: #69c0ff; 
+}
+#selectLevel img {
+    margin-left: 15%;
+    width: 70%;
+    height: 70%;
+}
+/* 底部三个圆形按钮 */
+#bottomButtons {
+    margin-top: 50px;
+}
+#bottomButtonsText {
+    margin-top: 5px;
+    color: #ffffff;
+}
+.bottomEach {
+    float: left;
+    width: 29%;
+    height: auto;
+    padding-left: 13%;
+    text-align: center;
+}
+.bottomEach img{
+    width: 100%;
+    height: 100%;
 }
 /* 首页图片 */
 #indexImgDiv {
-    height: 50%;
-    border: 1px solid black;
+    height: 30%;
+    width: 80%;
+    margin-left: 10%;
+    margin-right: 10%;
+    background: url("../img/index.jpg");
+    background-size: 100% 100%;
+}
+/* 首页标题 */
+#indexTitle {
+    height: 10%;
+    width: 80%;
+    margin-left: 10%;
+    background: url("../img/maogaidatiaozhan.png");
+    background-size: 100% 100%;
+}
+/* 首页副标题 */
+#indexSubtitle {
+    padding: 10px 0;
+    color: #ffffff;
+    text-align: center;
 }
 
 /* 答题卡样式 */
@@ -29,7 +103,7 @@
 
 /* 结果样式 */
 #includeResult {
-    /* display: none; */
+    display: none;
     width: 100%;
     height: 100%;
 }
