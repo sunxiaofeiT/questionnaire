@@ -2,7 +2,10 @@
     display: none;
 }
 
-/* 答题首页样式 */
+/* 首页样式 */
+#includeStart {
+    display: none;
+}
 #startQuestion {
     width: 100%;
     height: 100%;
@@ -25,7 +28,36 @@
 }
 
 /* 结果样式 */
-#resultDiv {
+#includeResult {
+    /* display: none; */
     width: 100%;
     height: 100%;
+}
+#resultContent {
+    width: 70%;
+    margin-left: 13%;
+}
+#completeResultDiv {
+    margin-top: 30px;
+    height: 30px;
+}
+#wrongAndRightDiv {
+    height: 30px;
+}
+.infoText {
+    display: inline-block;
+    line-height: 30px;
+}
+.resultText {
+    display: inline-block;
+    line-height: 30px;
+}
+#leftInfo {
+    float: left;
+}
+#rightInfo {
+    float: right;
+}
+#scoreText {
+    width: 100%;
 }

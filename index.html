@@ -33,6 +33,13 @@
 			</div>
 			<button id="startButton" class="layui-btn layui-btn-normal">开始答题</button>
 		</div>
+		
+		<!-- 配置情况 -->
+		<div id="setting">
+			
+		</div>
+
+		<!-- 答题 -->
 		<div id="includeAnswer" class="wrapper">
 			<div id="answer" class="card_wrap">
 				<!-- 答题卡 -->
@@ -43,8 +50,36 @@
 
 		<!-- 结果 -->
 		<div id="includeResult">
-			<div id="resultCOntent">
-				
+			<div id="resultContent">
+				<div id="completeResultDiv">
+					<div id="leftInfo">
+						<div id="didTitle" class="infoText">做了:</div>
+						<div id="didContent" class="resultText">
+							<label id="didNumber" class="">0</label>
+						</div>
+					</div>
+					<div id="rightInfo">
+						<div id="undidTitle" class="infoText">未做:</div>
+						<div id="undidContent" class="resultText">
+							<label id="undidNumber" class="l">0</label>
+						</div>
+					</div>
+				</div>
+				<div id="wrongAndRightDiv">
+					<div id="leftInfo">
+						<div id="rightTitle" class="infoText">正确:</div>
+						<div id="rightContent" class="resultText">
+							<label id="rightNumber" class="">0</label>
+						</div>
+					</div>
+					<div id="rightInfo">
+						<div id="wrongTitle" class="infoText">错误:</div>
+						<div id="wrongContent" class="resultText">
+							<label id="wrongNumber" class="">0</label>
+						</div>
+					</div>
+				</div>
+				<button id="scoreText" class="layui-btn layui-btn-normal"></button>
 			</div>
 		</div>
 	</div>

@@ -2,7 +2,7 @@
  * @Author: Pengfei.Sun 
  * @Date: 2018-05-20 16:09:48 
  * @Last Modified by: Pengfei.Sun
- * @Last Modified time: 2018-05-21 19:04:18
+ * @Last Modified time: 2018-05-21 19:23:37
  */
 
 var allQuestionsNumber = allQuestions.length; //题库中题目个数
@@ -135,7 +135,7 @@ function addQuestion(allNumber,number,classNumber,array,preButton) {
 /**
  * 根据传入的参数增加所有的题目
  * 
- * @param {string} questionsNumber 
+ * @param {string} questionsNumber 本次答题的题目的数量
  */
 function addAllQuestiions(questionsNumber) {
     for (var i = 0; i< questionsNumber; i++) {
@@ -240,33 +240,44 @@ function getScore(selectedQuestions) {
     var undid = 0;
     for(var i = 0; i < selectedQuestions.length; i++) {
         if (selectedQuestions[i].status == null) {
-            undid += 1;
-            console.log('undid');
+            undid ++;
         }else if(selectedQuestions[i].status == 'right'){
-            console.log(selectedQuestions[i].status);
-            score += 1;
-            did = did + 1;
-            console.log('score',score);
+            score ++;
+            did ++;
         }else {
-            wrong += 1;
-            did += 1;
-            console.log(did);            
+            wrong ++;
+            did ++;     
         } 
     }
     return [did,undid,score,wrong];
 }
-
+/**
+ * 监听每道题的选项的点击事件
+ * 
+ */
 function listenOptionClick() {
     $('.option').on('click',function() {
         var elemId, questionId,value;
         elemId = $(this).attr('id');
         questionId = elemId.substr(1,1); 
         value = elemId.substr(3);
-        console.log('you clcik question',questionId,' button',value);
         setScore(questionId,value);
         if(questionId == selectedQuestionsNumber) {
             var array = getScore(selectedQuestions);
-            console.log('you did',array[0],'. you didnot',array[1],'score:',array[2],'wrong:',array[3]);
+            console.log('Did:',array[0],'. Undid:',array[1],'. Score:',array[2],'. Wrong:',array[3]);
+            endButton();
+            setResultInDom(array);
         }
     })
+}
+
+function setResultInDom(array) {
+    if(array.length < 4) {
+        console.log('将结果渲染到页面时出错,传入的数组长度错误');
+    }else {
+        $('#didNumber').html(array[0]);
+        $('#undidNumber').html(array[1]);
+        $('#rightNumber').html(array[2]);
+        $('#wrongNumber').html(array[3]);
+    }
 }
