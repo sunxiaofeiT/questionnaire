@@ -2,38 +2,28 @@
  * @Author: Pengfei.Sun 
  * @Date: 2018-05-20 16:09:48 
  * @Last Modified by: Pengfei.Sun
- * @Last Modified time: 2018-05-20 22:01:46
+ * @Last Modified time: 2018-05-21 19:04:18
  */
 
 var allQuestionsNumber = allQuestions.length; //题库中题目个数
-var selectedQuestionsNumber = 8;
+var selectedQuestionsNumber = 3;
 var selectedQuestions = addIdForSelectedQuestions(getRandomArrayElements(allQuestions,selectedQuestionsNumber)); //选中的题
 var questionContent; //每个题的题目和选项
-var score;  //得分
+// var score;  //得分
 var rightQuestions = []; //正确题目
 var wrongQuestions = []; //错误题目
 
 $(document).ready(function(){
+    // 首页操作
+    $('#startButton').on('click', function() {
+        startButton()
+    });
+
+    // 答题相关操作
     var questionsNumber = selectedQuestionsNumber;
     var questionDom;
-    for (var i = 0; i< questionsNumber; i++) {
-        questionContent = selectedQuestions[i];
-        var classNumber,preButton;
-        if ( i == 0 ){
-            preButton = '';
-            classNumber = 'card' + (i+1);            
-            questionDom = addQuestion(questionsNumber,(i+1).toString(),classNumber,questionContent,preButton);            
-        }else if (i < 3){
-            preButton = '<a class="prev">上一题</a>';
-            classNumber = 'card' + (i+1);
-            questionDom = addQuestion(questionsNumber,(i+1).toString(),classNumber,questionContent,preButton);
-        }else {
-            preButton = '<a class="prev">上一题</a>';            
-            classNumber = '';
-            questionDom = addQuestion(questionsNumber,(i+1).toString(),classNumber,questionContent,preButton);
-        };
-        $('#answer').append(questionDom);
-    };
+    // 增加答题卡
+    addAllQuestiions(questionsNumber);
     // 切换答题卡
     $.fn.answerSheet = function (options) {
         var defaults = {
@@ -88,13 +78,7 @@ $(document).ready(function(){
     $("#answer").answerSheet();
     $("#answer").trigger("create");
     // 监听题卡选项的点击
-    $('.option').on('click',function() {
-        var elemId = $(this).attr('id');
-        var questionId = elemId.substr(1,1); 
-        var value = elemId.substr(3);
-        console.log('you clcik question',questionId,' button',value);
-        setScore(questionId,value);
-    })
+    listenOptionClick();
 })
 
 /**
@@ -149,6 +133,31 @@ function addQuestion(allNumber,number,classNumber,array,preButton) {
     return questionDom;
 }
 /**
+ * 根据传入的参数增加所有的题目
+ * 
+ * @param {string} questionsNumber 
+ */
+function addAllQuestiions(questionsNumber) {
+    for (var i = 0; i< questionsNumber; i++) {
+        questionContent = selectedQuestions[i];
+        var classNumber,preButton;
+        if ( i == 0 ){
+            preButton = '';
+            classNumber = 'card' + (i+1);            
+            questionDom = addQuestion(questionsNumber,(i+1).toString(),classNumber,questionContent,preButton);            
+        }else if (i < 3){
+            preButton = '<a class="prev">上一题</a>';
+            classNumber = 'card' + (i+1);
+            questionDom = addQuestion(questionsNumber,(i+1).toString(),classNumber,questionContent,preButton);
+        }else {
+            preButton = '<a class="prev">上一题</a>';            
+            classNumber = '';
+            questionDom = addQuestion(questionsNumber,(i+1).toString(),classNumber,questionContent,preButton);
+        };
+        $('#answer').append(questionDom);
+    };
+}
+/**
  * 随机获取数组中的几个元素
  * 
  * @param {array} array 源数组 
@@ -166,10 +175,12 @@ function getRandomArrayElements(array, number) {
     return shuffled.slice(min);
 }
 /**
- * 判断选择是否正确,并根据是否争取存入对应数组
+ * 判断选择是否正确,并根据是否争取存入对应数组,
+ * 并在selsectedQuestions对象数组的每个对象加上status属性
+ * right 和 wrong
  * 
- * @param {any} questionId 问题的Id
- * @param {any} value 选中的值
+ * @param {string} questionId 问题的Id
+ * @param {string} value 选中的值
  */
 function setScore(questionId,value){
     if (selectedQuestions[questionId-1].answer == value) {
@@ -193,4 +204,69 @@ function addIdForSelectedQuestions(selectedQuestions) {
         selectedQuestions[i].id = (i);
     }
     return selectedQuestions;
+}
+/**
+ * 点击开始按钮事件
+ * 
+ */
+function startButton() {
+    var shouye = $('#includeStart');
+    var ele = $('#includeAnswer');
+    shouye.fadeOut();
+    setTimeout(()=> {
+        ele.fadeIn("slow");
+    },200)
+}
+/**
+ * 答题结束调用此方法,展示结果,隐藏答题卡
+ * 
+ */
+function endButton() {
+    var questionDom = $('#includeAnswer');
+    questionDom.fadeOut('slow');
+    var resultDom = $('#includeResult');
+    resultDom.fadeIn('slow');
+}
+/**
+ * 判断题目完成情况,计算已做和未做的,以及得分情况
+ * 
+ * @param {array} selectedQuestions 
+ * @returns [did,undid,score,wrong]
+ */
+function getScore(selectedQuestions) {
+    var score = 0;
+    var wrong = 0;
+    var did = 0;
+    var undid = 0;
+    for(var i = 0; i < selectedQuestions.length; i++) {
+        if (selectedQuestions[i].status == null) {
+            undid += 1;
+            console.log('undid');
+        }else if(selectedQuestions[i].status == 'right'){
+            console.log(selectedQuestions[i].status);
+            score += 1;
+            did = did + 1;
+            console.log('score',score);
+        }else {
+            wrong += 1;
+            did += 1;
+            console.log(did);            
+        } 
+    }
+    return [did,undid,score,wrong];
+}
+
+function listenOptionClick() {
+    $('.option').on('click',function() {
+        var elemId, questionId,value;
+        elemId = $(this).attr('id');
+        questionId = elemId.substr(1,1); 
+        value = elemId.substr(3);
+        console.log('you clcik question',questionId,' button',value);
+        setScore(questionId,value);
+        if(questionId == selectedQuestionsNumber) {
+            var array = getScore(selectedQuestions);
+            console.log('you did',array[0],'. you didnot',array[1],'score:',array[2],'wrong:',array[3]);
+        }
+    })
 }
