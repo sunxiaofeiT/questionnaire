@@ -20,6 +20,7 @@
 
 <body>
 	<!-- js -->
+	<script src="./plugins/layui/layui.js"></script>
 	<script src="./js/jquery-1.8.3.min.js"></script>
 	<script src="./js/questions.js"></script>
 	<script src="./js/maogai.js"></script>
@@ -28,28 +29,40 @@
 	<div id="includeStart">
 		<div id="indexImgDiv"></div>
 		<div id="indexTitle"></div>
-		<div id="indexSubtitle"><h4>你的毛概学的咋样!？</h4></div>
-		<button id="startButton" class="layui-btn"><img src="./img/start.png"></button>
-		<button id="selectLevel" class="layui-btn"><img src="./img/selectLevel.png"></button>
+		<div id="indexSubtitle">
+			<h4>你的毛概学的咋样!？</h4>
+		</div>
+		<button id="startButton" class="layui-btn">
+			<img src="./img/start.png">
+		</button>
+		<button id="selectLevel" class="layui-btn">
+			<img src="./img/selectLevel.png">
+		</button>
 		<div id="bottomButtons">
-			<div class="bottomEach"><img src="./img/cbackground.jpg"></div>
-			<div class="bottomEach"><img src="./img/cbackground.jpg"></div>
-			<div class="bottomEach"><img src="./img/cbackground.jpg"></div>		
-			<div style="clear:both"></div>	
+			<div class="bottomEach">
+				<img src="./img/button3.png">
+			</div>
+			<div class="bottomEach">
+				<img src="./img/button2.png">
+			</div>
+			<div class="bottomEach">
+				<img src="./img/button1.png">
+			</div>
+			<div style="clear:both"></div>
 		</div>
 		<div id="bottomButtonsText">
-			<div class="bottomEach">排行榜</div>
+			<div id="ranking" class="bottomEach">排行榜</div>
 			<div class="bottomEach">资料</div>
-			<div class="bottomEach">说明</div>			
+			<div class="bottomEach">说明</div>
 		</div>
 	</div>
 
 
 	<div id="htmlContent">
-		
+
 		<!-- 配置情况 -->
 		<div id="setting">
-			
+
 		</div>
 
 		<!-- 答题 -->
@@ -57,44 +70,73 @@
 			<div id="answer" class="card_wrap">
 				<!-- 答题卡 -->
 			</div>
-			<div style="text-align:center;clear:both">
-			</div>
+			<div style="text-align:center;clear:both"></div>
 		</div>
+	</div>
 
-		<!-- 结果 -->
-		<div id="includeResult">
-			<div id="resultContent">
-				<div id="completeResultDiv">
-					<div id="leftInfo">
-						<div id="didTitle" class="infoText">做了:</div>
-						<div id="didContent" class="resultText">
-							<label id="didNumber" class="">0</label>
-						</div>
-					</div>
-					<div id="rightInfo">
-						<div id="undidTitle" class="infoText">未做:</div>
-						<div id="undidContent" class="resultText">
-							<label id="undidNumber" class="l">0</label>
-						</div>
-					</div>
-				</div>
-				<div id="wrongAndRightDiv">
-					<div id="leftInfo">
-						<div id="rightTitle" class="infoText">正确:</div>
-						<div id="rightContent" class="resultText">
-							<label id="rightNumber" class="">0</label>
-						</div>
-					</div>
-					<div id="rightInfo">
-						<div id="wrongTitle" class="infoText">错误:</div>
-						<div id="wrongContent" class="resultText">
-							<label id="wrongNumber" class="">0</label>
-						</div>
+	<!-- 结果 -->
+	<div id="includeResult">
+		<div id="resultContent">
+			<fieldset class="layui-elem-field layui-field-title">
+				<legend>本次挑战得分</legend>
+			</fieldset>
+			<div id="score">
+				<h2></h2>
+				<p>分</p>
+			</div>
+			<div id="completeResultDiv">
+				<div id="leftInfo">
+					<div id="didTitle" class="infoText">做了:</div>
+					<div id="didContent" class="resultText">
+						<label id="didNumber" class="">0</label><label> 道</label>
 					</div>
 				</div>
-				<button id="scoreText" class="layui-btn layui-btn-normal"></button>
+				<div id="rightInfo">
+					<div id="undidTitle" class="infoText">未做:</div>
+					<div id="undidContent" class="resultText">
+						<label id="undidNumber" class="l">0</label><label> 道</label>
+					</div>
+				</div>
+			</div>
+			<div id="wrongAndRightDiv">
+				<div id="leftInfo">
+					<div id="rightTitle" class="infoText">正确:</div>
+					<div id="rightContent" class="resultText">
+						<label id="rightNumber" class="">0</label><label> 道</label>
+					</div>
+				</div>
+				<div id="rightInfo">
+					<div id="wrongTitle" class="infoText">错误:</div>
+					<div id="wrongContent" class="resultText">
+						<label id="wrongNumber" class="">0</label><label> 道</label>
+					</div>
+				</div>
+			</div>
+			
+			<div id="resultButton">
+				<button id="returnHome" class="layui-btn layui-btn-normal layui-btn-fluid"><i class="layui-icon">&#xe68e;</i>返回首页</button>
+				<button id="scoreText" class="layui-btn layui-btn-normal layui-btn-fluid"><i class="layui-icon">&#xe9aa;</i>重新挑战</button>
 			</div>
 		</div>
+	</div>
+
+
+	<!-- 难度选择 -->
+	<div id="setDiff">
+		<form class="layui-form" action="">
+			<div class="layui-form-item">
+				<label class="layui-form-label">难度</label>
+				<div class="layui-input-block">
+					<select id="levelSelect" name="interest" lay-filter="aihao">
+						<option value=""></option>
+						<option value="0">简单</option>
+						<option value="1" selected="">普通</option>
+						<option value="2">困难</option>
+						<option value="3">极难</option>
+					</select>
+				</div>
+			</div>
+		</form>
 	</div>
 
 </body>

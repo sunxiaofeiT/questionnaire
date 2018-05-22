@@ -12,19 +12,67 @@ var questionContent; //每个题的题目和选项
 // var score;  //得分
 var rightQuestions = []; //正确题目
 var wrongQuestions = []; //错误题目
+var levelValue = 0; // 难度系数
+var levelText = '简单'; //难度
 
 $(document).ready(function(){
-    // 首页操作
-    $('#startButton').on('click', function() {
-        startButton()
-    });
+    layui.use(['layer','form'],function () {
+        var layer = layui.layer;
+        var form = layui.form;
+        // 开始答题
+        $('#startButton').on('click', function() {
+            // addAllQuestiions(selectedQuestionsNumber);  //向页面中增加题目
+            setQuestionsNumber(levelValue);
+            startButton()
+            layer.msg('当前难度为:' + levelText, {'time':'1000'});
+        });
+        
+        // 难度选择
+        $('#selectLevel').on('click',function () {
+            selectLevel();
+        })
+        
+        // 答题相关操作
+        var questionDom;
+        // 增加答题卡
+        addAllQuestiions(selectedQuestionsNumber);
 
-    // 答题相关操作
-    var questionsNumber = selectedQuestionsNumber;
-    var questionDom;
-    // 增加答题卡
-    addAllQuestiions(questionsNumber);
-    // 切换答题卡
+        // 切换答题卡
+        $("#answer").answerSheet();
+        $("#answer").trigger("create");
+        // 监听题卡选项的点击
+        listenOptionClick();
+
+        // 结果页返回首页
+        $('#returnHome').on('click',function () {
+            console.log('return to home page');
+            $('#includeResult').fadeOut();
+            location.reload();
+        })
+
+        // 重新挑战
+        $('#scoreText').on('click',function () {
+            layer.msg('重新挑战 ！',{ 'time':'800'});
+            var elem = $('.card_cont');
+            console.log(elem[0]);
+            for (var i = 0; i < elem.length; i++) {
+                if( elem[i].classList.contains('cardn')) {
+                    elem[i].classList.remove('cardn');
+                }else if( elem[i].classList.contains('card1') ) {
+                    elem[i].classList.remove('card1');
+                }else if( elem[i].classList.contains('card2') ) {
+                    elem[i].classList.remove('card2');
+                }
+                if( i < 3) {
+                    elem[i].classList.add('card'+(i+1));
+                }
+            }
+            console.log(elem);
+            $('#includeResult').hide();
+            $('#includeAnswer').fadeIn();
+        })
+    })
+        
     $.fn.answerSheet = function (options) {
         var defaults = {
             mold: 'card',
@@ -75,10 +123,6 @@ $(document).ready(function(){
             }
         });
     };
-    $("#answer").answerSheet();
-    $("#answer").trigger("create");
-    // 监听题卡选项的点击
-    listenOptionClick();
 })
 
 /**
@@ -223,9 +267,9 @@ function startButton() {
  */
 function endButton() {
     var questionDom = $('#includeAnswer');
-    questionDom.fadeOut('');
+    questionDom.hide();
     var resultDom = $('#includeResult');
-    resultDom.fadeIn('');
+    resultDom.fadeIn();
 }
 /**
  * 判断题目完成情况,计算已做和未做的,以及得分情况
@@ -261,6 +305,7 @@ function listenOptionClick() {
         elemId = $(this).attr('id');
         questionId = elemId.substr(1,1); 
         value = elemId.substr(3);
+        console.log(questionId,selectedQuestionsNumber);
         setScore(questionId,value);
         if(questionId == selectedQuestionsNumber) {
             var array = getScore(selectedQuestions);
@@ -270,14 +315,72 @@ function listenOptionClick() {
         }
     })
 }
-
+/**
+ * 将答题结果情况渲染到页面上
+ * 
+ * @param {any} array 
+ */
 function setResultInDom(array) {
     if(array.length < 4) {
         console.log('将结果渲染到页面时出错,传入的数组长度错误');
     }else {
         $('#didNumber').html(array[0]);
         $('#undidNumber').html(array[1]);
-        $('#rightNumber').html(array[2]);
+        $('#rightNumber').html(array[2]); //得分
+        $('#score h2').html(array[2]*10);
         $('#wrongNumber').html(array[3]);
+    }
+}
+/**
+ * 选择难度函数，弹窗选择难度，设置全局参数 levelValue
+ * 
+ */
+function selectLevel () {
+    var value, text;
+    layer.open({
+        type: '1',
+        title: '选择你要挑战的难度',
+        content: $('#setDiff'),
+        area: ['80%','50%'],
+        btn: ['确认'],
+        btnAlign: 'c',
+        btn1: (index) => {
+            value = $('#levelSelect').val();
+            if( value == 0) {
+                text = '简单';
+            }else if (value == 1) {
+                text = '普通';
+            }else if(value == 2) {
+                text = '困难';
+            }else if(value = 3){
+                text = '极难';
+            }
+            layer.msg('你选择了 "' + text + '" 难度', {'time':'1000'});
+            levelValue = value;
+            levelText = text;
+            console.log('you chose the level', value);
+            layer.close(index);
+        }
+    })
+}
+/**
+ * 根据传入的难度值设置本次答题的题目个数
+ * 
+ * @param {any} levelValue 难度系数 0=》简单，1=》普通，2=》困难，3=》极难
+ */ 
+function setQuestionsNumber(levelValue) {
+    if (levelValue == 0) {
+        console.log('当前难度为：' + levelValue);
+        selectedQuestionsNumber = 3;    //简单
+    }else if (levelValue == 1) {
+        console.log('set ' + levelValue);
+        selectedQuestionsNumber = 10;   //普通
+    }else if(levelValue == 2) {
+        selectedQuestionsNumber = 20; // 困难
+    }else if(levelValue == 3) {
+        selectedQuestionsNumber == 30;  //极难
+    }else {
+        console.log('levelValue is illegal!. Please choose a diff level!');
+        layer.msg('请选择一个难度！', {'time':'1000'});
     }
 }

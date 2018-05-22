@@ -6,7 +6,8 @@ html,body {
     margin: 0 auto;
     overflow-x: hidden;
     /* background: url(../img/bg-textbook.jpg) no-repeat center top; */
-    background: linear-gradient(#40a9ff, #1890ff);
+    /* background: linear-gradient(#ffadd2, #eb2f96); */
+    background: linear-gradient(#91d5ff, #1890ff);
     background-size: 100% 100%;
     font-size: 15px;
 }
@@ -78,7 +79,7 @@ html,body {
     width: 80%;
     margin-left: 10%;
     margin-right: 10%;
-    background: url("../img/index.jpg");
+    background: url("../img/index2.png");
     background-size: 100% 100%;
 }
 /* 首页标题 */
@@ -98,6 +99,8 @@ html,body {
 
 /* 答题卡样式 */
 #includeAnswer {
+    height: 100%;
+    width: 100%;
     display: none;
 }
 
@@ -107,17 +110,81 @@ html,body {
     width: 100%;
     height: 100%;
 }
+.layui-field-title {
+    margin-top: 20px;
+    padding-left: auto;
+    padding-right: auto;
+}
+#score {
+    margin-top: 70px;
+    margin-bottom: 70px;
+    height: 80px;
+    line-height: 80px;
+    text-align: center;
+}
+#score h2 {
+    font-size:  80px;
+    color: #f5222d;
+    display: inline;
+}
+#score p {
+    font-size: 16px;
+    color: #888888;
+    display: inline;
+}
 #resultContent {
     width: 70%;
     margin-left: 13%;
+    width: 80%;
+    margin-left: 10%;
+    border: 1px solid #ffffff;
+    height: 90%;
+    margin-top: 5%;
+    background-color: #ffffff;
+    border-radius: 20px;
+    box-shadow: 10px 10px 5px #888888;
 }
 #completeResultDiv {
     margin-top: 30px;
     height: 30px;
+    padding-left: 60px;
+    padding-right: 60px;
 }
 #wrongAndRightDiv {
     height: 30px;
+    padding: 0 60px 0 60px;    
 }
+#didTitle, #undidTitle, #rightTitle, #wrongTitle {
+    color: #595959;
+}
+#didNumber, #undidNumber, #wrongNumber, #rightNumber {
+    color: #1890ff;
+}
+/* 结果页两个按钮 */
+#resultButton {
+    padding-left: 30px;
+    padding-right: 30px;
+    margin-top: 150px;
+}
+#returnHome, #scoreText {
+    border-radius: 20px;
+}
+#returnHome i, #scoreText i {
+    padding-right:  5px;
+}
+#returnHome {
+    background-color: #ff4d4f;
+}
+#scoreText {
+    background-color: #8c8c8c;
+}
+#scoreText {
+    margin-top: 20px;
+}
+.layui-btn+.layui-btn {
+    margin-left: 0;
+}
+
 .infoText {
     display: inline-block;
     line-height: 30px;
@@ -132,6 +199,16 @@ html,body {
 #rightInfo {
     float: right;
 }
-#scoreText {
-    width: 100%;
+/* 难度选择 */
+#setDiff {
+    display: none;
+}
+/* 难度选择下选框 */
+.layui-input-block {
+    margin-top: 20px;    
+    margin-right: 40px;
+}
+/* 下拉选中的颜色 */
+.layui-form-select dl dd.layui-this {
+    background-color: #1890ff;
 }
