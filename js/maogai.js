@@ -6,8 +6,8 @@
  */
 
 var allQuestionsNumber = allQuestions.length; //题库中题目个数
-var selectedQuestionsNumber = 3;
-var selectedQuestions = addIdForSelectedQuestions(getRandomArrayElements(allQuestions,selectedQuestionsNumber)); //选中的题
+var selectQuestionsNumber = 5;
+var selectedQuestions = addIdForSelectedQuestions(getRandomArrayElements(allQuestions,selectQuestionsNumber)); //选中的题
 var questionContent; //每个题的题目和选项
 // var score;  //得分
 var rightQuestions = []; //正确题目
@@ -21,10 +21,16 @@ $(document).ready(function(){
         var form = layui.form;
         // 开始答题
         $('#startButton').on('click', function() {
-            // addAllQuestiions(selectedQuestionsNumber);  //向页面中增加题目
             setQuestionsNumber(levelValue);
+            console.log('selectQuestionsNumber:' + selectQuestionsNumber);
+            selectedQuestions = addIdForSelectedQuestions(getRandomArrayElements(allQuestions,selectQuestionsNumber));
+            addAllQuestiions(selectQuestionsNumber);  //向页面中增加题目
+            $("#answer").answerSheet();
+            $("#answer").trigger("create");
             startButton()
             layer.msg('当前难度为:' + levelText, {'time':'1000'});
+            // 监听题卡选项的点击
+            listenOptionClick();            
         });
         
         // 难度选择
@@ -35,13 +41,14 @@ $(document).ready(function(){
         // 答题相关操作
         var questionDom;
         // 增加答题卡
-        addAllQuestiions(selectedQuestionsNumber);
+        addAllQuestiions(selectQuestionsNumber);
 
         // 切换答题卡
         $("#answer").answerSheet();
         $("#answer").trigger("create");
+
         // 监听题卡选项的点击
-        listenOptionClick();
+        // listenOptionClick();
 
         // 结果页返回首页
         $('#returnHome').on('click',function () {
@@ -53,21 +60,7 @@ $(document).ready(function(){
         // 重新挑战
         $('#scoreText').on('click',function () {
             layer.msg('重新挑战 ！',{ 'time':'800'});
-            var elem = $('.card_cont');
-            console.log(elem[0]);
-            for (var i = 0; i < elem.length; i++) {
-                if( elem[i].classList.contains('cardn')) {
-                    elem[i].classList.remove('cardn');
-                }else if( elem[i].classList.contains('card1') ) {
-                    elem[i].classList.remove('card1');
-                }else if( elem[i].classList.contains('card2') ) {
-                    elem[i].classList.remove('card2');
-                }
-                if( i < 3) {
-                    elem[i].classList.add('card'+(i+1));
-                }
-            }
-            console.log(elem);
+            resetQuestions();
             $('#includeResult').hide();
             $('#includeAnswer').fadeIn();
         })
@@ -182,7 +175,10 @@ function addQuestion(allNumber,number,classNumber,array,preButton) {
  * @param {string} questionsNumber 本次答题的题目的数量
  */
 function addAllQuestiions(questionsNumber) {
-    for (var i = 0; i< questionsNumber; i++) {
+    var ele = $('.card_cont');
+    console.log(ele.length,questionsNumber);
+    // questionsNumber -= ele.length;
+    for (var i = ele.length; i< questionsNumber; i++) {
         questionContent = selectedQuestions[i];
         var classNumber,preButton;
         if ( i == 0 ){
@@ -303,11 +299,17 @@ function listenOptionClick() {
     $('.option').on('click',function() {
         var elemId, questionId,value;
         elemId = $(this).attr('id');
-        questionId = elemId.substr(1,1); 
+        // TODO, 字符串截取不同
+        console.log(elemId.length);
+        if(elemId.length > 4){
+            questionId = elemId.substr(1,2); 
+        }else {
+            questionId = elemId.substr(1,1);             
+        }
         value = elemId.substr(3);
-        console.log(questionId,selectedQuestionsNumber);
+        console.log(questionId,selectQuestionsNumber);
         setScore(questionId,value);
-        if(questionId == selectedQuestionsNumber) {
+        if(questionId == selectQuestionsNumber) {
             var array = getScore(selectedQuestions);
             console.log('Did:',array[0],'. Undid:',array[1],'. Score:',array[2],'. Wrong:',array[3]);
             endButton();
@@ -370,17 +372,35 @@ function selectLevel () {
  */ 
 function setQuestionsNumber(levelValue) {
     if (levelValue == 0) {
-        console.log('当前难度为：' + levelValue);
-        selectedQuestionsNumber = 3;    //简单
+        selectQuestionsNumber = 5;    //简单
     }else if (levelValue == 1) {
-        console.log('set ' + levelValue);
-        selectedQuestionsNumber = 10;   //普通
+        selectQuestionsNumber = 10;   //普通
     }else if(levelValue == 2) {
-        selectedQuestionsNumber = 20; // 困难
+        selectQuestionsNumber = 20; // 困难
     }else if(levelValue == 3) {
-        selectedQuestionsNumber == 30;  //极难
+        selectQuestionsNumber == 30;  //极难
     }else {
         console.log('levelValue is illegal!. Please choose a diff level!');
         layer.msg('请选择一个难度！', {'time':'1000'});
+    }
+}
+/**
+ * 重置答题卡的顺序，恢复到原始位置，以便于重新挑战
+ * 
+ */
+function resetQuestions() {
+    var elem = $('.card_cont');
+    console.log(elem[0]);
+    for (var i = 0; i < elem.length; i++) {
+        if( elem[i].classList.contains('cardn')) {
+            elem[i].classList.remove('cardn');
+        }else if( elem[i].classList.contains('card1') ) {
+            elem[i].classList.remove('card1');
+        }else if( elem[i].classList.contains('card2') ) {
+            elem[i].classList.remove('card2');
+        }
+        if( i < 3) {
+            elem[i].classList.add('card'+(i+1));
+        }
     }
 }
