@@ -37,6 +37,28 @@ $(document).ready(function(){
         $('#selectLevel').on('click',function () {
             selectLevel();
         })
+
+        // 设置个人资料
+        $('.setUserInfoButton').on('click', function () {
+            layer.open({
+                type: 1,
+                title: '设置用户信息',
+                content: $('#userInfo'),
+                area: ['250px','300px'],
+                btn: ['确认'],
+                btnAlign: 'c',
+                btn1: (index) => {
+                    if($('.userName').val()) {
+                        var user;
+                        user.userName = $('#userName').val();
+                        users.push(user);
+                        layer.close(index);
+                    }else {
+                        layer.msg('请输入昵称！', {'time':'800'});
+                    }
+                }
+            })
+        })
         
         // 答题相关操作
         var questionDom;
@@ -162,7 +184,7 @@ function addQuestion(allNumber,number,classNumber,array,preButton) {
                             '</li>';
         };
         questionDom += '</ul>'+ 
-                        '<div class="card_bottom">'+ preButton +'<span><b>'+ number +'</b>/'+ allNumber +'</span></div>'+
+                        '<div class="card_bottom">'+ preButton +'<span><b>'+ number +'</b>/<p>'+ allNumber +'</p></span></div>'+
                         '</div>'+
                         '</div>';
     }
@@ -176,7 +198,7 @@ function addQuestion(allNumber,number,classNumber,array,preButton) {
  */
 function addAllQuestiions(questionsNumber) {
     var ele = $('.card_cont');
-    console.log(ele.length,questionsNumber);
+    // console.log(ele.length,questionsNumber);
     // questionsNumber -= ele.length;
     for (var i = ele.length; i< questionsNumber; i++) {
         questionContent = selectedQuestions[i];
@@ -196,6 +218,7 @@ function addAllQuestiions(questionsNumber) {
         };
         $('#answer').append(questionDom);
     };
+    $('.card_bottom p').html(questionsNumber);    
 }
 /**
  * 随机获取数组中的几个元素
@@ -299,7 +322,6 @@ function listenOptionClick() {
     $('.option').on('click',function() {
         var elemId, questionId,value;
         elemId = $(this).attr('id');
-        // TODO, 字符串截取不同
         console.log(elemId.length);
         if(elemId.length > 4){
             questionId = elemId.substr(1,2); 

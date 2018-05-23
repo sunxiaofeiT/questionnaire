@@ -23,6 +23,7 @@
 	<script src="./plugins/layui/layui.js"></script>
 	<script src="./js/jquery-1.8.3.min.js"></script>
 	<script src="./js/questions.js"></script>
+	<script src="./js/users.js"></script>
 	<script src="./js/maogai.js"></script>
 
 	<!-- 首页 -->
@@ -40,20 +41,20 @@
 		</button>
 		<div id="bottomButtons">
 			<div class="bottomEach">
-				<img src="./img/button3.png">
+				<img  class="ranking" src="./img/button3.png">
 			</div>
 			<div class="bottomEach">
-				<img src="./img/button2.png">
+				<img class="setUserInfoButton" src="./img/button2.png">
 			</div>
 			<div class="bottomEach">
-				<img src="./img/button1.png">
+				<img class="shuoming" src="./img/button1.png">
 			</div>
 			<div style="clear:both"></div>
 		</div>
 		<div id="bottomButtonsText">
-			<div id="ranking" class="bottomEach">排行榜</div>
-			<div class="bottomEach">资料</div>
-			<div class="bottomEach">说明</div>
+			<div class="ranking bottomEach">排行榜</div>
+			<div class="setUserInfoButton bottomEach">资料</div>
+			<div class="shuoming bottomEach">说明</div>
 		</div>
 	</div>
 
@@ -137,6 +138,18 @@
 				</div>
 			</div>
 		</form>
+	</div>
+
+	<!-- 个人信息 -->
+	<div id="userInfo">
+		<div>
+			<label>昵称</label>
+			<input id="userName" class="layui-input layui-input-fluid">
+		</div>
+		<div>
+			<label>邮箱</label>
+			<input id="userEmail" class="layui-input">
+		</div>
 	</div>
 
 </body>

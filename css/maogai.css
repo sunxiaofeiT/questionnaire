@@ -103,6 +103,10 @@ html,body {
     width: 100%;
     display: none;
 }
+/* 答题卡底部个数指示 */
+.card_bottom p {
+    display: inline;
+}
 
 /* 结果样式 */
 #includeResult {
@@ -211,4 +215,17 @@ html,body {
 /* 下拉选中的颜色 */
 .layui-form-select dl dd.layui-this {
     background-color: #1890ff;
+}
+
+/* 个人信息 */
+#userInfo {
+    display: none;
+}
+#userInfo div input {
+    display: inline-block;
+    width: 180px;
+}
+#userInfo div {
+    margin-left: 15px;
+    margin-top: 30px;
 }
