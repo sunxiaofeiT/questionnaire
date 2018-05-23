@@ -47,9 +47,10 @@ $(document).ready(function(){
                 area: ['250px','300px'],
                 btn: ['确认'],
                 btnAlign: 'c',
-                btn1: (index) => {
-                    if($('.userName').val()) {
-                        var user;
+                btn1: function(index) {
+                    var isNull = $('#userName').val() == '';  
+                    if(!isNull) {
+                        var user = {};
                         user.userName = $('#userName').val();
                         users.push(user);
                         layer.close(index);
@@ -58,6 +59,15 @@ $(document).ready(function(){
                     }
                 }
             })
+        })
+
+        // 排行榜
+        $('.ranking').on('click',function() {
+            console.log('ranking list');
+            var shouye = $('#includeStart');
+            var ele = $('#rankingListDiv');
+            shouye.fadeOut();
+            ele.fadeIn();
         })
         
         // 答题相关操作
@@ -85,6 +95,26 @@ $(document).ready(function(){
             resetQuestions();
             $('#includeResult').hide();
             $('#includeAnswer').fadeIn();
+        })
+
+        // 排行榜页面返回首页
+        $('.rankingButton').on('click',function() {
+            $('#rankingListDiv').fadeOut();
+            location.reload();
+        })
+
+        // 说明
+        $('.shuoming').on('click',function() {
+            layer.open({
+                type: 1,
+                title: '说明',
+                area: ['300px', '550px'],
+                content: $('#shuoming'),
+                btn: ['确认'],
+                btn1: function (index) {
+                    layer.close(index);
+                }
+            })
         })
     })
         

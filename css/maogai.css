@@ -120,8 +120,8 @@ html,body {
     padding-right: auto;
 }
 #score {
-    margin-top: 70px;
-    margin-bottom: 70px;
+    margin-top: 60px;
+    margin-bottom: 20px;
     height: 80px;
     line-height: 80px;
     text-align: center;
@@ -228,4 +228,86 @@ html,body {
 #userInfo div {
     margin-left: 15px;
     margin-top: 30px;
+}
+/* 头像 */  
+#headPicDiv {
+    margin-left: auto;
+    margin-right: auto;
+    width: 70px;
+    height: 70px;
+    text-align: center;
+}
+#headPic {
+    width: 100%;
+    height: 100%;
+    border-radius: 30px;
+
+}
+/* 排行榜 */
+#rankingListDiv {
+    background: #ffffff;
+}
+#rankingImg {
+    width: 100%;
+    height: 40%;
+    padding: 40px 40px;;
+    background-color: #0050b3
+}
+#rankingImg img {
+    width: 100%;
+    height: 100%;
+}
+#rankingPageClass {
+    background-color: #0050b3;
+    border-radius: 0 0 20px 20px;
+}
+#rankingPageClass {
+    color: #ffffff;
+    font-size: 20px;
+    font-weight: 400;
+    text-align: center;
+    height: 30px;
+}
+#rankingListName {
+    width: 100%;
+    background-color: #ffffff;
+}
+.rankingButton,
+.rankingEachName {
+    height: 60px;
+    width: 80%;
+    margin-left: 10%;
+    margin-top: 10px;
+}
+.rankingImgDiv {
+    width: 50px;
+    height: 50px;
+    margin-top: 5px;
+    margin-left: 20px;
+    float: left;
+}
+.rankingImgDiv img {
+    width: 100%;
+    height: 100%;
+    border-radius: 30px;
+}
+.rankingInfoDiv {
+    float: left;
+    margin-top: 15px;
+    margin-left: 10px;
+}
+/* 说明 */
+#shouming {
+    display: none;
+}
+#shuoming h2 {
+    color: #ff4d4f;
+}
+#author,
+#wangzhanshuoming {
+    margin-top: 35px;
+    margin-left: 20px;
+    margin-right: 20px;
+    color: #1890ff;
+    line-height: 2;
 }

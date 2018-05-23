@@ -41,7 +41,7 @@
 		</button>
 		<div id="bottomButtons">
 			<div class="bottomEach">
-				<img  class="ranking" src="./img/button3.png">
+				<img class="ranking" src="./img/button3.png">
 			</div>
 			<div class="bottomEach">
 				<img class="setUserInfoButton" src="./img/button2.png">
@@ -53,7 +53,7 @@
 		</div>
 		<div id="bottomButtonsText">
 			<div class="ranking bottomEach">排行榜</div>
-			<div class="setUserInfoButton bottomEach">资料</div>
+			<div class="setUserInfoButton bottomEach">个人信息</div>
 			<div class="shuoming bottomEach">说明</div>
 		</div>
 	</div>
@@ -81,6 +81,12 @@
 			<fieldset class="layui-elem-field layui-field-title">
 				<legend>本次挑战得分</legend>
 			</fieldset>
+			<!-- 头像 -->
+			<div id="headPicDivDiv">
+				<div id="headPicDiv">
+					<img id="headPic" src="./img/touxiang.jpg">
+				</div>
+			</div>
 			<div id="score">
 				<h2></h2>
 				<p>分</p>
@@ -89,13 +95,15 @@
 				<div id="leftInfo">
 					<div id="didTitle" class="infoText">做了:</div>
 					<div id="didContent" class="resultText">
-						<label id="didNumber" class="">0</label><label> 道</label>
+						<label id="didNumber" class="">0</label>
+						<label> 道</label>
 					</div>
 				</div>
 				<div id="rightInfo">
 					<div id="undidTitle" class="infoText">未做:</div>
 					<div id="undidContent" class="resultText">
-						<label id="undidNumber" class="l">0</label><label> 道</label>
+						<label id="undidNumber" class="l">0</label>
+						<label> 道</label>
 					</div>
 				</div>
 			</div>
@@ -103,20 +111,24 @@
 				<div id="leftInfo">
 					<div id="rightTitle" class="infoText">正确:</div>
 					<div id="rightContent" class="resultText">
-						<label id="rightNumber" class="">0</label><label> 道</label>
+						<label id="rightNumber" class="">0</label>
+						<label> 道</label>
 					</div>
 				</div>
 				<div id="rightInfo">
 					<div id="wrongTitle" class="infoText">错误:</div>
 					<div id="wrongContent" class="resultText">
-						<label id="wrongNumber" class="">0</label><label> 道</label>
+						<label id="wrongNumber" class="">0</label>
+						<label> 道</label>
 					</div>
 				</div>
 			</div>
-			
+
 			<div id="resultButton">
-				<button id="returnHome" class="layui-btn layui-btn-normal layui-btn-fluid"><i class="layui-icon">&#xe68e;</i>返回首页</button>
-				<button id="scoreText" class="layui-btn layui-btn-normal layui-btn-fluid"><i class="layui-icon">&#xe9aa;</i>重新挑战</button>
+				<button id="returnHome" class="layui-btn layui-btn-normal layui-btn-fluid">
+					<i class="layui-icon">&#xe68e;</i>返回首页</button>
+				<button id="scoreText" class="layui-btn layui-btn-normal layui-btn-fluid">
+					<i class="layui-icon">&#xe9aa;</i>重新挑战</button>
 			</div>
 		</div>
 	</div>
@@ -152,6 +164,105 @@
 		</div>
 	</div>
 
+	<!-- 排行榜 -->
+	<div id="rankingListDiv">
+		<div id="rankingImg">
+			<img src="./img/rankingBackground.png">
+		</div>
+		<div id="rankingPageClass"></div>
+		<div id="rankingListName">
+			<div class="rankingEachName">
+				<!-- 排行榜头像 -->
+				<div class="rankingImgDiv">
+					<img id="rankingTouxiang" src="./img/touxiang.jpg">
+				</div>
+				<div class="rankingInfoDiv">
+					<h4>小明</h4>
+					<p>得分：
+						<span id="rankingScore">90</span>分。 用时：
+						<span id="rankingTime">40</span>秒</p>
+				</div>
+			</div>
+			<hr>
+			<div class="rankingEachName">
+				<!-- 排行榜头像 -->
+				<div class="rankingImgDiv">
+					<img id="rankingTouxiang" src="./img/touxiang.jpg">
+				</div>
+				<div class="rankingInfoDiv">
+					<h4>小明</h4>
+					<p>得分：
+						<span id="rankingScore">90</span>分。 用时：
+						<span id="rankingTime">56</span>秒</p>
+				</div>
+			</div>
+			<hr>
+			<div class="rankingEachName">
+				<!-- 排行榜头像 -->
+				<div class="rankingImgDiv">
+					<img id="rankingTouxiang" src="./img/touxiang.jpg">
+				</div>
+				<div class="rankingInfoDiv">
+					<h4>王小明</h4>
+					<p>得分：
+					<span id="rankingScore">70</span>分。 用时：
+					<span id="rankingTime">40</span>秒</p>
+				</div>
+			</div>
+			<hr >
+			<div class="rankingEachName">
+					<!-- 排行榜头像 -->
+					<div class="rankingImgDiv">
+						<img id="rankingTouxiang" src="./img/touxiang.jpg">
+					</div>
+					<div class="rankingInfoDiv">
+						<h4>小红</h4>
+						<p>得分：<span id="rankingScore">60</span>分。
+							 用时：<span id="rankingTime">70</span>秒</p>
+					</div>
+			</div>
+			<hr>
+			<div class="rankingEachName">
+					<!-- 排行榜头像 -->
+					<div class="rankingImgDiv">
+						<img id="rankingTouxiang" src="./img/touxiang.jpg">
+					</div>
+					<div class="rankingInfoDiv">
+						<h4>孙小丽</h4>
+						<p>得分：<span id="rankingScore">60</span>分。 
+							用时：<span id="rankingTime">80</span>秒</p>
+					</div>
+			</div>
+			<hr>
+			<div class="rankingEachName">
+					<!-- 排行榜头像 -->
+					<div class="rankingImgDiv">
+						<img id="rankingTouxiang" src="./img/touxiang.jpg">
+					</div>
+					<div class="rankingInfoDiv">
+						<h4>大明</h4>
+						<p>得分：<span id="rankingScore">10</span>分。 用时：<span id="rankingTime">10</span>秒</p>
+					</div>
+			</div>
+		</div>
+		<div class="rankingButton">
+			<button class="layui-btn layui-btn-normal layui-btn-fluid">返回首页</button>
+		</div>
+
+	</div>
+
+	<!-- 说明 -->
+	<div id="shuoming">
+		<div id="author">
+			<h2>作者</h2>
+			<p>本网站由天津大学软件工程2015级毛概小组完成。</p>
+			<p>小组成员: 孙鹏飞、吴乐玲、汪美琴</p>
+		</div>
+		<div id="wangzhanshuoming">
+			<h2>关于</h2>
+			<p>本站的主要功能为答题，同时附带计时、排行榜、昵称的功能。</p>
+		</div>
+	</div>
 </body>
 
 </html>
