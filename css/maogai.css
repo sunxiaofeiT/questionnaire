@@ -297,9 +297,9 @@ html,body {
     margin-left: 10px;
 }
 /* 说明 */
-#shouming {
-    display: none;
-}
+/* #shouming { */
+    /* display: none; */
+/* } */
 #shuoming h2 {
     color: #ff4d4f;
 }
