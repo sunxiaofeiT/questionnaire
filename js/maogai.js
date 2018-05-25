@@ -14,6 +14,9 @@ var rightQuestions = []; //正确题目
 var wrongQuestions = []; //错误题目
 var levelValue = 0; // 难度系数
 var levelText = '简单'; //难度
+var user = {};
+user.name = '';
+user.email = '';;
 
 $(document).ready(function(){
     layui.use(['layer','form'],function () {
@@ -21,16 +24,20 @@ $(document).ready(function(){
         var form = layui.form;
         // 开始答题
         $('#startButton').on('click', function() {
-            setQuestionsNumber(levelValue);
-            console.log('selectQuestionsNumber:' + selectQuestionsNumber);
-            selectedQuestions = addIdForSelectedQuestions(getRandomArrayElements(allQuestions,selectQuestionsNumber));
-            addAllQuestiions(selectQuestionsNumber);  //向页面中增加题目
-            $("#answer").answerSheet();
-            $("#answer").trigger("create");
-            startButton()
-            layer.msg('当前难度为:' + levelText, {'time':'1000'});
-            // 监听题卡选项的点击
-            listenOptionClick();            
+            if( user.name == null || user.name == ''){
+                layer.msg('请先点击个人信息填写信息！', {'time':'1000'});
+            }else {
+                setQuestionsNumber(levelValue);
+                console.log('selectQuestionsNumber:' + selectQuestionsNumber);
+                selectedQuestions = addIdForSelectedQuestions(getRandomArrayElements(allQuestions,selectQuestionsNumber));
+                addAllQuestiions(selectQuestionsNumber);  //向页面中增加题目
+                $("#answer").answerSheet();
+                $("#answer").trigger("create");
+                startButton()
+                layer.msg('当前难度为:' + levelText, {'time':'1000'});
+                // 监听题卡选项的点击
+                listenOptionClick();            
+            }
         });
         
         // 难度选择
@@ -45,28 +52,28 @@ $(document).ready(function(){
                 title: '设置用户信息',
                 content: $('#userInfo'),
                 area: ['250px','300px'],
-                btn: ['确认'],
+                btn: ['确认','取消'],
                 btnAlign: 'c',
                 btn1: function(index) {
-                    var isNull = $('#userName').val() == '';  
-                    if(!isNull) {
-                        var user = {};
-                        user.userName = $('#userName').val();
-                        users.push(user);
-                        layer.close(index);
+                    if( $('#userName').val() == '') {
+                        layer.msg('请输入个人信息！');
                     }else {
-                        layer.msg('请输入昵称！', {'time':'800'});
+                        setUserInfo();
+                        layer.close(index);
                     }
+                },
+                btn2: function (index) {
+                    layer.close(index);
                 }
             })
         })
 
-        // 排行榜
+        // 首页排行榜
         $('.ranking').on('click',function() {
             console.log('ranking list');
             var shouye = $('#includeStart');
             var ele = $('#rankingListDiv');
-            shouye.fadeOut();
+            shouye.hide();
             ele.fadeIn();
         })
         
@@ -99,8 +106,8 @@ $(document).ready(function(){
 
         // 排行榜页面返回首页
         $('.rankingButton').on('click',function() {
-            $('#rankingListDiv').fadeOut();
-            location.reload();
+            $('#rankingListDiv').hide();
+            $('#includeStart').fadeIn();
         })
 
         // 说明
@@ -110,7 +117,8 @@ $(document).ready(function(){
                 title: '说明',
                 area: ['300px', '550px'],
                 content: $('#shuoming'),
-                btn: ['确认'],
+                btn: ['我知道了'],
+                btnAlign: 'c',
                 btn1: function (index) {
                     layer.close(index);
                 }
@@ -283,7 +291,7 @@ function setScore(questionId,value){
     }else  {
         wrongQuestions.push(selectedQuestions[questionId-1]);
         selectedQuestions[questionId-1].status = 'wrong';        
-        console.log(selectedQuestions[questionId-1].status);
+        // console.log(selectedQuestions[questionId-1].status);
     }
 }
 /**
@@ -352,14 +360,14 @@ function listenOptionClick() {
     $('.option').on('click',function() {
         var elemId, questionId,value;
         elemId = $(this).attr('id');
-        console.log(elemId.length);
+        // console.log(elemId.length);
         if(elemId.length > 4){
             questionId = elemId.substr(1,2); 
         }else {
             questionId = elemId.substr(1,1);             
         }
         value = elemId.substr(3);
-        console.log(questionId,selectQuestionsNumber);
+        // console.log(questionId,selectQuestionsNumber);
         setScore(questionId,value);
         if(questionId == selectQuestionsNumber) {
             var array = getScore(selectedQuestions);
@@ -430,7 +438,7 @@ function setQuestionsNumber(levelValue) {
     }else if(levelValue == 2) {
         selectQuestionsNumber = 20; // 困难
     }else if(levelValue == 3) {
-        selectQuestionsNumber == 30;  //极难
+        selectQuestionsNumber = 30;  //极难
     }else {
         console.log('levelValue is illegal!. Please choose a diff level!');
         layer.msg('请选择一个难度！', {'time':'1000'});
@@ -455,4 +463,25 @@ function resetQuestions() {
             elem[i].classList.add('card'+(i+1));
         }
     }
+}
+/**
+ * 点击个人信息页面的确定按钮后执行的事件
+ * 主要是增加一个新的用户
+ * 
+ */
+function setUserInfo() {
+    var name = $('#userName').val();
+    var email = $('#userEmail').val();
+    user.name = name;
+    user.email = email;
+    console.log(user.id);
+    if (user.id == null){
+        user.id = users.length + 1;
+        users.push(user);
+    }else {
+        users[user.id-1].name = name;
+        users[user.id-1].email = email;
+    }
+    layer.msg('欢迎：' + user.name + ' !', {'time':'800'});
+    console.log(user);
 }

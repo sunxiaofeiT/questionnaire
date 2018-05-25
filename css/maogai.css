@@ -1,3 +1,4 @@
+/* 全局样式 */
 html,body {
     line-height: 1;
     color: #333;
@@ -11,6 +12,10 @@ html,body {
     background-size: 100% 100%;
     font-size: 15px;
 }
+.layui-layer-btn0, .layui-layer-btn1{
+    border-radius: 20px !important;
+}
+
 #resultDiv {
     display: none;
 }
@@ -106,6 +111,10 @@ html,body {
 /* 答题卡底部个数指示 */
 .card_bottom p {
     display: inline;
+}
+/* 答题卡“上一页”样式 */
+.card .card_bottom a {
+    color:#1890ff;
 }
 
 /* 结果样式 */
@@ -247,18 +256,19 @@ html,body {
 #rankingListDiv {
     background: #ffffff;
 }
+/* 顶部图片样式 */
 #rankingImg {
     width: 100%;
     height: 40%;
     padding: 40px 40px;;
-    background-color: #0050b3
+    background-color: #1890ff;
 }
 #rankingImg img {
     width: 100%;
     height: 100%;
 }
 #rankingPageClass {
-    background-color: #0050b3;
+    background-color: #1890ff;
     border-radius: 0 0 20px 20px;
 }
 #rankingPageClass {
@@ -310,4 +320,22 @@ html,body {
     margin-right: 20px;
     color: #1890ff;
     line-height: 2;
+}
+
+/* 单选框样式 */
+input[type='radio']+label:after {
+    color: #0050b3;
+}
+/* 排行榜button样式 */
+#rankingReturnHome {
+    border-radius: 30px;
+    margin-top: 10px;
+}
+
+/* 弹层 */
+.layui-layer {
+    border-radius: 10px !important;
+}
+.layui-layer-title {
+    border-radius: 5px;
 }
