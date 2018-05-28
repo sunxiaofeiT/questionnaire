@@ -76,7 +76,7 @@ input {
 }
 
 .card_wrap {
-  width: 400px;
+  /* width: 400px; */
   height: 584px;
   position: relative;
   overflow: hidden;
@@ -116,7 +116,7 @@ input {
 .card .card_bottom {
   width: 100%;
   position: absolute;
-  bottom: 28px;
+  bottom: 45px;
   left: 0;
   box-sizing: border-box;
   padding: 0 28px

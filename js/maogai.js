@@ -1,8 +1,8 @@
 /*
  * @Author: Pengfei.Sun 
  * @Date: 2018-05-20 16:09:48 
- * @Last Modified by: Pengfei.Sun
- * @Last Modified time: 2018-05-21 19:23:37
+ * @Last Modified by: pengfei.SUN
+ * @Last Modified time: 2018-05-28 16:20:57
  */
 
 var usersApi = 'http://localhost:3000/users';
@@ -53,6 +53,7 @@ $(document).ready(function(){
     layui.use(['layer','form'],function () {
         var layer = layui.layer;
         var form = layui.form;
+
         // 开始答题
         $('#startButton').on('click', function() {
             if( user.userName == null || user.userName == ''){
@@ -64,6 +65,7 @@ $(document).ready(function(){
                 addAllQuestiions(selectQuestionsNumber);  //向页面中增加题目
                 $("#answer").answerSheet();
                 $("#answer").trigger("create");
+                setTimer();// 计时器
                 startButton()
                 layer.msg('当前难度为:' + levelText, {'time':'1000'});
                 // 监听题卡选项的点击
@@ -99,9 +101,9 @@ $(document).ready(function(){
             })
         })
 
-        // 首页排行榜
+        // 打开排行榜
         $('.ranking').on('click',function() {
-            console.log('ranking list');
+            setRankingDom(users);
             var shouye = $('#includeStart');
             var ele = $('#rankingListDiv');
             shouye.hide();
@@ -129,6 +131,9 @@ $(document).ready(function(){
 
         // 重新挑战
         $('#scoreText').on('click',function () {
+            $('#timeText').html('00 min 00 sec');
+            clearTime(timecount);
+            setTimer();
             layer.msg('重新挑战 ！',{ 'time':'800'});
             resetQuestions();
             $('#includeResult').hide();
@@ -401,6 +406,7 @@ function listenOptionClick() {
         // console.log(questionId,selectQuestionsNumber);
         setScore(questionId,value);
         if(questionId == selectQuestionsNumber) {
+            clearTime(timecount); //清楚时间
             var array = getScore(selectedQuestions);
             console.log('Did:',array[0],'. Undid:',array[1],'. Score:',array[2],'. Wrong:',array[3]);
             var params = {};
@@ -408,6 +414,7 @@ function listenOptionClick() {
             params.userName = user.userName;
             params.userEmail = user.userEmail;
             params.score = (array[2] * 10);
+            params.time = $('#timeText').html();
             $.ajax({
                 url: usersApi + '/' + user.id,
                 type: 'PUT',
@@ -583,7 +590,6 @@ function getAjax (api) {
             console.log('get function wrong')
         }
     })
-    // console.log(res);
     return res;
 }
 /**
@@ -595,12 +601,86 @@ function getAjax (api) {
 function sortScore(array) {
     for (var i = 0; i < array.length; i++) {
         for(var j = i+1; j < array.length; j++ ) {
-            if(arra[i].score < array[j].score) {
+            if(array[i].score < array[j].score) {
                 var temp = array[i];
                 array[i] = array[j];
                 array[j] = temp;
+            }else if (array[i].score == array[j].score) {
+                if(array[i].time > array[j].time) {
+                    var temp = array[i];
+                    array[i] = array[j];
+                    array[j] = temp;
+                }
             }
         }
     }
     return array
+}
+/**
+ * 动态增加排名
+ * 
+ * @param {any} array 
+ */
+function setRankingDom (array) {
+    var eachName;
+    var array = sortScore(array);
+    for (var i = 0; i < array.length; i++) {
+        eachName = '<div class="rankingEachName">'+
+                        '<!-- 排行榜头像 -->'+
+                        '<div class="rankingImgDiv">'+
+                        '<img id="rankingTouxiang" src="./img/touxiang.jpg">'+
+                        '</div>'+
+                        '<div class="rankingInfoDiv">'+
+                            '<h4>'+array[i].userName+'</h4>'+
+                            '<p>得分：<span id="rankingScore">'+array[i].score+'</span>分。 用时：<span id="rankingTime">'+array[i].time+'</span></p>'+
+                        '</div>'+
+                    '</div>'+
+                    '<hr>';
+        $('#rankingListName').append(eachName);
+    }
+}
+
+var timecount;
+function setTimer() {
+    timecount = null;
+    if (timecount != null) {
+    } else {
+        var times = 1;
+        timecount = window.setInterval(function () {
+            var hour, min, sec;
+            if (times < 60) {
+                hour = 0;
+                min = 0;
+                sec = times;
+                $('#timeText').html(numToStr(min) + ' min ' + numToStr(sec) + ' sec');
+            } else if (times < 3600) {
+                hour = 0;
+                min = Math.floor(times / 60);
+                sec = times - min * 60;
+                $('#timeText').html(numToStr(min) + ' min ' + numToStr(sec) + ' sec');
+            } else if (times < 3600 * 60) {
+                hour = Math.floor(times / 3600);
+                min = Math.floor((times - hour * 3600) / 60);
+                sec = times - hour * 3600 - mini * 60;
+                $('#timeText').html(numToStr(hour) + ' hour ' + numToStr(min) + ' min');
+            } else {
+                times = 0;
+                hour = 0;
+                min = 0;
+                sec = 0;
+                $('#timeText').html(numToStr(min) + ' min ' + numToStr(sec) + ' sec');
+            }
+            times++;
+        }, 1000)
+    }
+};
+function clearTime(e) {
+    clearInterval(e);
+}
+function numToStr(num) {
+    if (num < 10) {
+        return '0' + num;
+    } else {
+        return '' + num;
+    }
 }

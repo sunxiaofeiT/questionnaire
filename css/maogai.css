@@ -33,7 +33,7 @@ html,body {
 }
 /* 开始按钮 */
 #startButton {
-    margin-top: 100px;
+    margin-top: 40px;
     width: 80%;
     height: 55px;
     margin-left: 10%;
@@ -64,6 +64,7 @@ html,body {
     margin-top: 50px;
 }
 #bottomButtonsText {
+    font-size: 14px;
     margin-top: 5px;
     color: #ffffff;
 }
@@ -82,6 +83,7 @@ html,body {
 #indexImgDiv {
     height: 30%;
     width: 80%;
+    /* margin-top: 10px; */
     margin-left: 10%;
     margin-right: 10%;
     background: url("../img/index2.png");
@@ -338,4 +340,23 @@ input[type='radio']+label:after {
 }
 .layui-layer-title {
     border-radius: 5px;
+}
+
+/* 倒计时 */
+#timeDiv {
+    width: 60%;
+    margin-left: 20%;
+    margin-top: 10px;
+}
+#timeDiv img{
+    width: 45px;
+    height: 45px;
+    float: left;
+}
+#timeText {
+    float: left;
+    font-size: 25px;
+    color: #ffffff;
+    padding-top: 15px;
+    padding-left: 10px;
 }
