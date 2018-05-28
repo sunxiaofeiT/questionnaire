@@ -5,18 +5,49 @@
  * @Last Modified time: 2018-05-21 19:23:37
  */
 
-var allQuestionsNumber = allQuestions.length; //题库中题目个数
+var usersApi = 'http://localhost:3000/users';
+var questionsApi = 'http://localhost:3000/questions';
+var allQuestions;
+var users;
+var allQuestionsNumber; //题库中题目个数
 var selectQuestionsNumber = 5;
-var selectedQuestions = addIdForSelectedQuestions(getRandomArrayElements(allQuestions,selectQuestionsNumber)); //选中的题
 var questionContent; //每个题的题目和选项
-// var score;  //得分
 var rightQuestions = []; //正确题目
 var wrongQuestions = []; //错误题目
 var levelValue = 0; // 难度系数
 var levelText = '简单'; //难度
 var user = {};
-user.name = '';
-user.email = '';;
+user.userName = '';
+user.userEmail = '';;
+
+$.ajax({
+    url: usersApi,
+    type: 'GET',
+    dataType: 'json',
+    async: false,
+    success: function (response) {
+        users = response;
+    },
+    error: function(response) {
+        console.log(response);
+    }
+})
+$.ajax({
+    url: questionsApi,
+    type: 'GET',
+    async: false,
+    dataType: 'json',
+    success: function (response) {
+        allQuestions = response;
+        allQuestionsNumber = allQuestions.length;
+    },
+    error: function (response) {
+        console.log('ajax get questions wrong, message: ' + response);
+    }
+})
+var selectedQuestions = addIdForSelectedQuestions(getRandomArrayElements(allQuestions,selectQuestionsNumber)); //选中的题
+
+console.log(allQuestions,users);
 
 $(document).ready(function(){
     layui.use(['layer','form'],function () {
@@ -24,7 +55,7 @@ $(document).ready(function(){
         var form = layui.form;
         // 开始答题
         $('#startButton').on('click', function() {
-            if( user.name == null || user.name == ''){
+            if( user.userName == null || user.userName == ''){
                 layer.msg('请先点击个人信息填写信息！', {'time':'1000'});
             }else {
                 setQuestionsNumber(levelValue);
@@ -372,6 +403,24 @@ function listenOptionClick() {
         if(questionId == selectQuestionsNumber) {
             var array = getScore(selectedQuestions);
             console.log('Did:',array[0],'. Undid:',array[1],'. Score:',array[2],'. Wrong:',array[3]);
+            var params = {};
+            params.id = user.id;
+            params.userName = user.userName;
+            params.userEmail = user.userEmail;
+            params.score = (array[2] * 10);
+            $.ajax({
+                url: usersApi + '/' + user.id,
+                type: 'PUT',
+                contentType: 'application/x-www-form-urlencoded',
+                data: params,
+                async: false,
+                success: function () {
+                    console.log('增加分数成功！');
+                },
+                error: function (response) {
+                    console.log('增加分数失败，message: ' + response);
+                }
+            })
             endButton();
             setResultInDom(array);
         }
@@ -472,16 +521,86 @@ function resetQuestions() {
 function setUserInfo() {
     var name = $('#userName').val();
     var email = $('#userEmail').val();
-    user.name = name;
-    user.email = email;
-    console.log(user.id);
+    user.userName = name;
+    user.userEmail = email;
     if (user.id == null){
         user.id = users.length + 1;
         users.push(user);
+        var params = {};
+        params.id = users.length + 1;
+        params.userName = name;
+        params.userEmail = email;
+        $.ajax({
+            url: usersApi,
+            type: 'POST',
+            contentType: 'application/x-www-form-urlencoded',
+            data: params,
+            async: false,
+            success: function (response) {
+                users = getAjax(usersApi);
+                user = response;
+                // console.log(response);
+            },
+            error: function () {
+                layer.msg('新增用户失败，请重试！');
+            }
+        })     
     }else {
-        users[user.id-1].name = name;
-        users[user.id-1].email = email;
+        // users[user.id-1].userName = name;
+        // users[user.id-1].userEmail = email;
+        var params = {};
+        params.userName = name;
+        params.userEmail = email;
+        $.ajax({
+            url: usersApi + '/' + user.id,
+            type: 'PUT',
+            contentType: 'application/x-www-form-urlencoded',
+            data: params,
+            success: function (response) {
+                users = getAjax(usersApi);
+            },
+            error: function (response) {
+                layer.msg('修改用户信息失败，请重试！');
+            }
+        })
     }
-    layer.msg('欢迎：' + user.name + ' !', {'time':'800'});
-    console.log(user);
+    layer.msg('欢迎：' + user.userName + ' !', {'time':'800'});
+}
+
+function getAjax (api) {
+    var res; 
+    $.ajax({
+        url: api,
+        type: 'GET',
+        dataType: 'json',
+        async: false,
+        success: function(response){
+            console.log(response);
+            res = response;
+            return response;
+        },
+        error: function (response) {
+            console.log('get function wrong')
+        }
+    })
+    // console.log(res);
+    return res;
+}
+/**
+ * 根据分数对对象数组进行从打到小的排序
+ * 
+ * @param {arry} array 对象数组
+ * @returns 排序后的数组
+ */
+function sortScore(array) {
+    for (var i = 0; i < array.length; i++) {
+        for(var j = i+1; j < array.length; j++ ) {
+            if(arra[i].score < array[j].score) {
+                var temp = array[i];
+                array[i] = array[j];
+                array[j] = temp;
+            }
+        }
+    }
+    return array
 }
