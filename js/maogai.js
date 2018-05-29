@@ -2,11 +2,13 @@
  * @Author: Pengfei.Sun 
  * @Date: 2018-05-20 16:09:48 
  * @Last Modified by: pengfei.SUN
- * @Last Modified time: 2018-05-28 16:20:57
+ * @Last Modified time: 2018-05-28 19:05:52
  */
 
 var usersApi = 'http://localhost:3000/users';
 var questionsApi = 'http://localhost:3000/questions';
+// var usersApi = 'http://123.206.227.133:3000/users';
+// var questionsApi = 'http://123.206.227.133:3000/questions';
 var allQuestions;
 var users;
 var allQuestionsNumber; //题库中题目个数
@@ -47,7 +49,7 @@ $.ajax({
 })
 var selectedQuestions = addIdForSelectedQuestions(getRandomArrayElements(allQuestions,selectQuestionsNumber)); //选中的题
 
-console.log(allQuestions,users);
+// console.log(allQuestions,users);
 
 $(document).ready(function(){
     layui.use(['layer','form'],function () {
@@ -625,18 +627,20 @@ function setRankingDom (array) {
     var eachName;
     var array = sortScore(array);
     for (var i = 0; i < array.length; i++) {
-        eachName = '<div class="rankingEachName">'+
-                        '<!-- 排行榜头像 -->'+
-                        '<div class="rankingImgDiv">'+
-                        '<img id="rankingTouxiang" src="./img/touxiang.jpg">'+
-                        '</div>'+
-                        '<div class="rankingInfoDiv">'+
-                            '<h4>'+array[i].userName+'</h4>'+
-                            '<p>得分：<span id="rankingScore">'+array[i].score+'</span>分。 用时：<span id="rankingTime">'+array[i].time+'</span></p>'+
-                        '</div>'+
-                    '</div>'+
-                    '<hr>';
-        $('#rankingListName').append(eachName);
+        if(array[i].score != null && array[i].time != null){
+            eachName = '<div class="rankingEachName">'+
+            '<!-- 排行榜头像 -->'+
+            '<div class="rankingImgDiv">'+
+            '<img id="rankingTouxiang" src="./img/touxiang.jpg">'+
+            '</div>'+
+            '<div class="rankingInfoDiv">'+
+            '<h4>'+array[i].userName+'</h4>'+
+            '<p>得分:<span id="rankingScore">'+array[i].score+'</span>分。 用时:<span id="rankingTime">'+array[i].time+'</span></p>'+
+            '</div>'+
+            '</div>'+
+            '<hr>';
+            $('#rankingListName').append(eachName);
+        }
     }
 }
 
